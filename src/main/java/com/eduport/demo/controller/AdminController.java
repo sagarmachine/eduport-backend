@@ -87,12 +87,14 @@ public class AdminController {
     public ResponseEntity<?> getClient(@PathVariable("counselling") boolean counselling,@PathVariable("done") boolean done,@PathVariable("page") int page,@PathVariable("search") String search){
 
         Sort sort;
-        Pageable pageable= PageRequest.of(page, 2 );
+        Pageable pageable= PageRequest.of(page, 3);
 
         HashMap<String,Object>hashMap= new HashMap<>();
 
-        hashMap.put("total",clientRepository.getFilterClientCount(counselling,done,search));
-              hashMap.put("data",clientRepository.getFilteredClient(counselling,done,search, pageable));
+        search=search.equals("all")?"":search;
+
+        hashMap.put("totalPages",(int)Math.ceil((clientRepository.getFilterClientCount(counselling,done,search)/3.0)));
+              hashMap.put("content",clientRepository.getFilteredClient(counselling,done,search, pageable));
 
        return new ResponseEntity<>(hashMap,HttpStatus.OK);
     }

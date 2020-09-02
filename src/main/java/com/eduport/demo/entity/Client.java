@@ -34,6 +34,10 @@ public class Client {
 
     boolean counselling=false;
 
+    String preference;
+
+    boolean marked=false;
+
     @CreationTimestamp
     @JsonFormat(pattern = "dd/MM/yyyy")
     Date createdOn;

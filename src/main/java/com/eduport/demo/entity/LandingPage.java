@@ -66,7 +66,7 @@ public class LandingPage {
     }
 
 
-    @OneToMany(mappedBy = "landingPage", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "landingPage", cascade = CascadeType.ALL)
     List<R7> r7= new ArrayList<>();
     public void addR7(R7 temp)
     {

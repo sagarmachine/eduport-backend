@@ -35,10 +35,14 @@ public class ContentSeviceImpl implements IContentSevice {
 
         LandingPage landingPage= landingPageRepository.findAll().get(0);
         PricingPage pricingPage=pricingPageRepository.findAll().get(0);
+       ContactPage contactPage=contactPageRepository.findAll().get(0);
+       // List<Blog> blogs=blogRepository.findAll();
 
         HashMap<String,Object> content=new HashMap<>();
         content.put("landingPage",landingPage);
         content.put("pricingPage",pricingPage);
+        content.put("contactPage",contactPage);
+     //   content.put("blogsPage",blogs);
 
         return new ResponseEntity<>(content, HttpStatus.OK);
 

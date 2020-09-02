@@ -24,7 +24,6 @@ public class ContactPage {
     String c1;
     String c2;
     String c3;
-    String term;
 
 
 }

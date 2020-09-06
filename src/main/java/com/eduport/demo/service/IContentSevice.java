@@ -1,9 +1,6 @@
 package com.eduport.demo.service;
 
-import com.eduport.demo.entity.Blog;
-import com.eduport.demo.entity.ContactPage;
-import com.eduport.demo.entity.LandingPage;
-import com.eduport.demo.entity.PricingPage;
+import com.eduport.demo.entity.*;
 import org.springframework.http.ResponseEntity;
 
 public interface IContentSevice {
@@ -14,5 +11,5 @@ public interface IContentSevice {
     void updatePricingPage(PricingPage pricingPage);
     void updateBlogsPage(Blog[] blogs);
     void updateContactPage(ContactPage contactPage);
-
+    void updateAboutPage(AboutPage aboutPage);
 }

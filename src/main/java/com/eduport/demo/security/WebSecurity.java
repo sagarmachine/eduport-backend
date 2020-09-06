@@ -1,5 +1,6 @@
 package com.eduport.demo.security;
 
+import com.eduport.demo.service.IAdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,35 +23,35 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     AdminNotLoginAuthenticationEntryPoint adminNotLoginAuthenticationEntryPoint;
 
-//    @Autowired
-//    AuthenticationFilter authenticationFilter;
+    @Autowired
+    AuthenticationFilter authenticationFilter;
 
-//    @Autowired
-//    IAdminService adminService;
+    @Autowired
+    IAdminService adminService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
                 // .anyRequest().permitAll();
-                 .antMatchers("/**/*")
-                //.antMatchers("/api/v1/content","/api/v1/admin/*","/**/*")
+               // .antMatchers("/**/*")
+                .antMatchers("/api/v1/content/**/*","/api/v1/content","/api/v1/client","/api/v1/admin","/api/v1/admin/authenticate")
                 .permitAll()
                 .anyRequest().authenticated();
                 //http.formLogin().loginProcessingUrl("/api/v1/admin/authenticate");
             http.exceptionHandling().authenticationEntryPoint(adminNotLoginAuthenticationEntryPoint)
                 .and().csrf().disable()
-               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            //  .and().addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+             .and().addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 //                .oauth2Login().successHandler(oAuth2SuccessHandler).failureHandler(oAuth2FailureHandler);//.defaultSuccessUrl("/api/v1/client/oauthAuthorization");
         http.cors();
 
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(adminService).passwordEncoder(getBCryptPasswordEnc());
-//    }
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(adminService).passwordEncoder(getBCryptPasswordEnc());
+    }
 
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEnc(){

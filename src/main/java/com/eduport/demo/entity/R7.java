@@ -21,6 +21,7 @@ public class R7 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Lob
     String comment;
 
     String name;

@@ -1,10 +1,8 @@
 package com.eduport.demo.service;
 
 import com.eduport.demo.entity.*;
-import com.eduport.demo.repo.BlogRepository;
-import com.eduport.demo.repo.ContactPageRepository;
-import com.eduport.demo.repo.LandingPageRepository;
-import com.eduport.demo.repo.PricingPageRepository;
+import com.eduport.demo.repo.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +14,7 @@ import java.util.List;
 
 
 @Service
+@Slf4j
 public class ContentSeviceImpl implements IContentSevice {
 
     @Autowired
@@ -30,19 +29,22 @@ public class ContentSeviceImpl implements IContentSevice {
     @Autowired
     ContactPageRepository contactPageRepository;
 
+    @Autowired
+    AboutPageRepository aboutPageRepository;
+
     @Override
     public ResponseEntity<?> getContent() {
 
         LandingPage landingPage= landingPageRepository.findAll().get(0);
         PricingPage pricingPage=pricingPageRepository.findAll().get(0);
        ContactPage contactPage=contactPageRepository.findAll().get(0);
-       // List<Blog> blogs=blogRepository.findAll();
+        List<Blog> blogs=blogRepository.findAll();
 
         HashMap<String,Object> content=new HashMap<>();
         content.put("landingPage",landingPage);
         content.put("pricingPage",pricingPage);
         content.put("contactPage",contactPage);
-     //   content.put("blogsPage",blogs);
+        content.put("blogsPage",blogs);
 
         return new ResponseEntity<>(content, HttpStatus.OK);
 
@@ -52,6 +54,9 @@ public class ContentSeviceImpl implements IContentSevice {
     public void updateLandingPage(LandingPage landingPage) {
 
         landingPageRepository.deleteAll();
+
+        log.info(landingPage.toString());
+
         List<R6> r5=landingPage.getR5();
         List<R7> r7=landingPage.getR7();
 
@@ -96,5 +101,11 @@ public class ContentSeviceImpl implements IContentSevice {
     public void updateContactPage(ContactPage contactPage) {
         contactPageRepository.deleteAll();
         contactPageRepository.save(contactPage);
+    }
+
+    @Override
+    public void updateAboutPage(AboutPage aboutPage) {
+        aboutPageRepository.deleteAll();
+        aboutPageRepository.save(aboutPage);
     }
 }

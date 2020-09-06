@@ -2,6 +2,7 @@ package com.eduport.demo.controller;
 
 
 import com.eduport.demo.entity.*;
+import com.eduport.demo.repo.BlogRepository;
 import com.eduport.demo.repo.ClientRepository;
 import com.eduport.demo.security.JWTUtil;
 import com.eduport.demo.service.IAdminService;
@@ -41,6 +42,9 @@ public class AdminController {
 
     @Autowired
     ClientRepository clientRepository;
+
+    @Autowired
+    BlogRepository blogRepository;
 
 
     @PostMapping(value="/authenticate")
@@ -83,11 +87,21 @@ public class AdminController {
         contentSevice.updateContactPage(contactPage);
     }
 
+    @PostMapping("/aboutpage")
+    public void updateAboutPage(@RequestBody AboutPage aboutPage){
+        contentSevice.updateAboutPage(aboutPage);
+    }
+
+    @GetMapping("/content/blogs")
+    public ResponseEntity<?> blogs(){
+        return new ResponseEntity<>(blogRepository.findAll(), HttpStatus.OK);
+    }
+
     @GetMapping("/client/{counselling}/{done}/{search}/{page}")
     public ResponseEntity<?> getClient(@PathVariable("counselling") boolean counselling,@PathVariable("done") boolean done,@PathVariable("page") int page,@PathVariable("search") String search){
 
         Sort sort;
-        Pageable pageable= PageRequest.of(page, 3);
+        Pageable pageable= PageRequest.of(page, 3,Sort.by("createdOn").descending());
 
         HashMap<String,Object>hashMap= new HashMap<>();
 

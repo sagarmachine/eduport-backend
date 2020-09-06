@@ -41,9 +41,11 @@ public class PricingPage {
 class Faq{
 
     @JsonProperty("ques")
+    @Lob
     String ques;
 
     @JsonProperty("ans")
+    @Lob
     String ans;
 
 

@@ -49,7 +49,7 @@ public class ClientController {
     }
 
 
-    int pageSize=9;
+    int pageSize=12;
 
 
     @GetMapping("/content/landing")

@@ -101,7 +101,7 @@ public class AdminController {
     public ResponseEntity<?> getClient(@PathVariable("counselling") boolean counselling,@PathVariable("done") boolean done,@PathVariable("page") int page,@PathVariable("search") String search){
 
         Sort sort;
-        Pageable pageable= PageRequest.of(page, 3,Sort.by("createdOn").descending());
+        Pageable pageable= PageRequest.of(page, 20,Sort.by("createdOn").descending());
 
         HashMap<String,Object>hashMap= new HashMap<>();
 
@@ -123,5 +123,24 @@ public class AdminController {
         client.setDone(!client.isDone());
         clientRepository.save(client);
     }
+
+    @PostMapping("/passwordResetRequest")
+    public  void  resetPasswordRequest(@RequestParam("url")String url){
+        adminService.passwordResetReques(url);
+   }
+
+    @PostMapping("/passwordReset")
+    public ResponseEntity<?> resetPassword(@RequestParam("key")String key,@RequestParam("password")String password,@RequestParam("newPassword")String newPassword){
+
+        try {
+            adminService.passwordReset(key,password,newPassword);
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+        } catch (Exception e) {
+           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 
 }

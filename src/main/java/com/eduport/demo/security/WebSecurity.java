@@ -34,8 +34,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 // .anyRequest().permitAll();
-               // .antMatchers("/**/*")
-                .antMatchers("/api/v1/content/**/*","/api/v1/content","/api/v1/client","/api/v1/admin","/api/v1/admin/authenticate")
+                 //.antMatchers("/**/*")
+                .antMatchers("/api/v1/content/**/*","/api/v1/content","/api/v1/client","/api/v1/admin","/api/v1/admin/authenticate","/api/v1/admin/passwordReset")
                 .permitAll()
                 .anyRequest().authenticated();
                 //http.formLogin().loginProcessingUrl("/api/v1/admin/authenticate");

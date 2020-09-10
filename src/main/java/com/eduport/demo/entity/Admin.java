@@ -24,5 +24,6 @@ public class Admin {
 
     String adminId;
     String adminSecret;
+    String changePasswordKey=null;
 
 }
